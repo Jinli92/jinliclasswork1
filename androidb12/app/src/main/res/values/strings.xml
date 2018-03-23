@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name" translatable="false">androidb12</string>
+    <string name="entername" translatable="false">Ok</string>
+    <string name="remember_password" translatable="false">Remember Password</string>
+    <string name="enterpassword" translatable="false">Enter Password</string>
+    <string name="enternamehint" translatable="false">Enter Name</string>
+    <string name="ok">Ok</string>
+    <string name="activity_stopped">Activity got stopped</string>
+</resources>
