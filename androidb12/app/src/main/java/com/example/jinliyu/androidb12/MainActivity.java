@@ -1,14 +1,17 @@
 package com.example.jinliyu.androidb12;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.PersistableBundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -48,12 +51,49 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
         spinner.setPrompt("select country");
         spinner.setOnItemSelectedListener(this);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.spinner_item,
+                R.id.spinnerText,
+                // android.R.layout.simple_dropdown_item_1line,
+                languages);
+        spinner.setAdapter(adapter); //setting adapter into socket
 
         nameEditText = (EditText) findViewById(R.id.editTextName);
         if (savedInstanceState != null) {
             nameEditText.setText(savedInstanceState.getString(Constants.KEY1));
         }
+
+
     }
+
+    private void showDialog() {
+        AlertDialog.Builder alertDialog = new
+                AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("Something wrong");
+        alertDialog.setMessage("password is not correct");
+        alertDialog.setCancelable(false);
+
+        alertDialog.setPositiveButton("ok, try it again", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this,"dialog ok button clicked",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        alertDialog.setNegativeButton("don't want to login", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+               finish();
+                 }
+        });
+
+        alertDialog.show();
+    }
+
+
+    String[] languages = {"Chinese", "English","Hindi","Korean"};
+
 
 
     @Override
@@ -108,15 +148,27 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
 
         switch (view.getId()) {
             case R.id.button3:
+                EditText pwt =findViewById(R.id.editTextPassword) ;
 
-                String name = nameEditText.getText().toString();
-                //    Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+               String name = nameEditText.getText().toString();
+               String pw = pwt.getText().toString();
 
-                Intent hIntent = new Intent(MainActivity.this, HomeActivity.class);
-                //explicit intent --name of activity to be started
-                hIntent.putExtra(Constants.KEY2, name);
-                //   startActivity(hIntent);
-                startActivityForResult(hIntent, 007);
+               if(name.equals("jinli")&& pw.equals("123"))
+               {
+                   Intent hIntent = new Intent(MainActivity.this, HomeActivity.class);
+                   hIntent.putExtra(Constants.KEY2, name);
+                   startActivity(hIntent);
+               }
+               else{
+                   showDialog();
+               }
+//                //    Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+//
+//                Intent hIntent = new Intent(MainActivity.this, HomeActivity.class);
+//                //explicit intent --name of activity to be started
+//                hIntent.putExtra(Constants.KEY2, name);
+//                //   startActivity(hIntent);
+//                startActivityForResult(hIntent, 007);
                 //start an activity and receive result back
                 break;
 
@@ -125,23 +177,24 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
                 String password = pwdEditText.getText().toString();
                 Toast.makeText(this, password, Toast.LENGTH_SHORT).show();
 
+                showDialog();
               /*  Intent dIntent  = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:123345"));//it will dial"123345"
                 //"Intent" invokes activity of my application and other applications
                 startActivity(dIntent);
 
                 */
 
-                final String CALCULATOR_PACKAGE = "com.android.calculator2";
-                final String CALCULATOR_CLASS = "com.android.calculator2.Calculator";
-                Intent intent = new Intent();
-
-                intent.setAction(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                intent.setComponent(new ComponentName(
-                        CALCULATOR_PACKAGE,
-                        CALCULATOR_CLASS));
-
-                startActivity(intent);
+//                final String CALCULATOR_PACKAGE = "com.android.calculator2";
+//                final String CALCULATOR_CLASS = "com.android.calculator2.Calculator";
+//                Intent intent = new Intent();
+//
+//                intent.setAction(Intent.ACTION_MAIN);
+//                intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//                intent.setComponent(new ComponentName(
+//                        CALCULATOR_PACKAGE,
+//                        CALCULATOR_CLASS));
+//
+//                startActivity(intent);
                 break;
 
 
